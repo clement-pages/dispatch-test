@@ -1,18 +1,14 @@
 name: Debug form
 description: that works
 body:
-  - type: input
-    id: test
-    attributes:
-      label: Test
   - type: dropdown
-    id: version
+    id: branch
     attributes:
-      label: Version
-      description: What version of our software are you running?
+      label: Branch
+      description: Select the branch to run the benchmark on
       options:
-        - 1.0.2 (Default)
-        - 1.0.3 (Edge)
-      default: 0
+        - main
+        - staging
+      default: main
     validations:
       required: true
