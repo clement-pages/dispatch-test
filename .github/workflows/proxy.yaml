@@ -3,12 +3,22 @@ on:
         types: [opened]
 
 jobs:
-    trigger-staging:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Trigger workflow on staging
-              uses: peter-evans/repository-dispatch@v4
-              with:
-                token: ${{ secrets.DISPATCH_TOKEN }}
-                repository: ${{ github.repository }}
-                event-type: run-on-staging
+
+  parse-form:
+    runs-on: ubuntu-latest
+
+    outputs:
+      branch: ${{ steps.branch.outputs.selected_branch }}
+    steps:
+      - name: Define branch
+        id: branch
+        run: |
+          # if the workflow was triggered by issue creation
+          if [ "${{ github.event_name }}" = "issues" ]; then
+            branch=$(awk '/### Branch/{getline; print $0}' issue_form.md | head -n1 | xargs)
+            echo "selected_branch=$branch" >> $GITHUB_OUTPUT
+          
+          # else it's a cron job
+          else
+            echo "selected_branch=main" >> $GITHUB_OUTPUT
+          fi
