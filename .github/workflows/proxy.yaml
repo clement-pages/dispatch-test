@@ -19,7 +19,7 @@ jobs:
         run: |
           # if the workflow was triggered by issue creation
           if [ "${{ github.event_name }}" = "issues" ]; then
-            branch=$(awk '/### branch/{getline; print $0}' issue_form.md | head -n1 | xargs)
+            branch=$(grep -A2 '### branch' issue_form.md | tail -n1 | xargs)
             echo "selected_branch=$branch" >> $GITHUB_OUTPUT
           
           # else it's a cron job
