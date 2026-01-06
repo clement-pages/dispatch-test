@@ -1,0 +1,15 @@
+on:
+  repository_dispatch:
+    types: [run-on-staging]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout staging branch
+        uses: actions/checkout@v4
+        with:
+          ref: staging
+
+      - name: Run tasks
+        run: echo "This workflow runs on staging branch code"
