@@ -9,6 +9,6 @@ body:
       options:
         - main
         - staging
-      default: main
+      default: 0
     validations:
       required: true
