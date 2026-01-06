@@ -10,6 +10,10 @@ jobs:
     outputs:
       branch: ${{ steps.branch.outputs.selected_branch }}
     steps:
+      - name: Extract issue body
+        if: github.event_name == 'issues'
+        run: echo "${{ github.event.issue.body}}" > issue_form.md
+
       - name: Define branch
         id: branch
         run: |
