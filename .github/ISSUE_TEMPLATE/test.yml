@@ -4,10 +4,10 @@ body:
   - type: dropdown
     id: branch
     attributes:
-      label: Branch
-      description: Select the branch to run the benchmark on
+      label: branch
+      description: What branch of our software are you running?
       options:
-        - main
+        - main (Default)
         - staging
       default: 0
     validations:
