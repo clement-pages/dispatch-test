@@ -1,0 +1,30 @@
+on:
+    issues:
+        types: [opened]
+
+jobs:
+
+  parse-form:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract issue body
+        if: github.event_name == 'issues'
+        run: echo "${{ github.event.issue.body}}" > issue_form.md
+
+      - name: Define branch
+        id: branch
+        run: |
+          # if the workflow was triggered by issue creation
+          if [ "${{ github.event_name }}" = "issues" ]; then
+            branch=$(grep -A2 '### branch' issue_form.md | tail -n1 | xargs)
+            echo "selected_branch=$branch" >> $GITHUB_OUTPUT
+          
+          # else it's a cron job
+          else
+            echo "selected_branch=main" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run workflow
+        run: |
+          gh workflow run workflow.yml --ref ${{ steps.branch.outputs.selected_branch }}

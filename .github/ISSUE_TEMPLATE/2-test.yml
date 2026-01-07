@@ -1,0 +1,15 @@
+name: Test form
+description: Select a branch
+title: Select a branch
+body:
+  - type: dropdown
+    id: branch
+    attributes:
+      label: Branch
+      description: Select the branch to run the benchmark on
+      options:
+        - main
+        - staging
+      default: main
+    validations:
+      required: true

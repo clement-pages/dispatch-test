@@ -1,0 +1,14 @@
+name: Debug form
+description: that works
+body:
+  - type: dropdown
+    id: branch
+    attributes:
+      label: branch
+      description: What branch of our software are you running?
+      options:
+        - main (Default)
+        - staging
+      default: 0
+    validations:
+      required: true

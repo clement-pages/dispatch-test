@@ -1,0 +1,11 @@
+on:
+    workflow_dispatch:
+
+jobs:
+
+  run-workflow:
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: echo something
+          run: echo "Running on main"
