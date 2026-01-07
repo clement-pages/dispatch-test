@@ -18,8 +18,4 @@ jobs:
 
     steps:
         - name: echo something
-<<<<<<< HEAD
-          run: echo "Running on staging"
-=======
-          run: echo "Running on main (${{ inputs.branch }}) with letters ${{ inputs.letters }}"
->>>>>>> main
+          run: echo "Running on staging (${{ inputs.branch }}) with letters ${{ inputs.letters }}"
