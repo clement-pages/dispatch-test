@@ -8,4 +8,4 @@ jobs:
 
     steps:
         - name: echo something
-          run: echo "Running on main"
+          run: echo "Running on staging"
