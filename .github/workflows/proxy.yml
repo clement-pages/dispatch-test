@@ -26,5 +26,7 @@ jobs:
           fi
 
       - name: Run workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           gh workflow run workflow.yml --ref ${{ steps.branch.outputs.selected_branch }}
