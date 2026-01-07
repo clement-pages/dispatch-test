@@ -1,14 +1,27 @@
-name: Debug form
-description: that works
+name: form
+description: test form
+title: Run form
 body:
   - type: dropdown
     id: branch
     attributes:
-      label: branch
-      description: What branch of our software are you running?
+      label: Branch
+      description: Select the branch
       options:
-        - main (Default)
+        - main
         - staging
       default: 0
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: option2
+    attributes:
+      label: Letter
+      description: Select the letter(s)
+      options:
+        - label: A
+        - label: B
+        - label: C
     validations:
       required: true

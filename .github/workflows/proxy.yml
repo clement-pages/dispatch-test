@@ -12,12 +12,12 @@ jobs:
         if: github.event_name == 'issues'
         run: echo "${{ github.event.issue.body}}" > issue_form.md
 
-      - name: Define branch
+      - name: Parse branch
         id: branch
         run: |
           # if the workflow was triggered by issue creation
           if [ "${{ github.event_name }}" = "issues" ]; then
-            branch=$(grep -A2 '### branch' issue_form.md | tail -n1 | xargs)
+            branch=$(grep -A2 '### Branch' issue_form.md | tail -n1 | xargs)
             echo "selected_branch=$branch" >> $GITHUB_OUTPUT
           
           # else it's a cron job
@@ -25,8 +25,19 @@ jobs:
             echo "selected_branch=main" >> $GITHUB_OUTPUT
           fi
 
+      - name: Parse selected letters
+        id: parse_letters
+        run: |
+          # Extract all checked letters [x] Label
+          LETTERS=$(grep '\[x\]' issue_form.md | grep -oP 'A|B|C' | tr '\n' ',' | sed 's/,$//')
+          echo "letters=$LETTERS" >> "$GITHUB_OUTPUT"
+
       - name: Run workflow
         env:
           GH_TOKEN: ${{ secrets.DISPATCH_TOKEN}}
         run: |
-          gh workflow run workflow.yml --repo ${{ github.repository }} --ref ${{ steps.branch.outputs.selected_branch }}
+          gh workflow run workflow.yml \
+          --repo ${{ github.repository }} \
+          --ref ${{ steps.branch.outputs.selected_branch }} \
+          -f branch=${{ steps.branch.outputs.selected_branch }} \
+          -f letters=${{ steps.parse_letters.outputs.letters }}
