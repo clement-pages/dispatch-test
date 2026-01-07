@@ -1,5 +1,15 @@
 on:
     workflow_dispatch:
+      inputs:
+        branch:
+          description: "branch"
+          required: true
+          type: string
+
+        letters:
+          description: "letters"
+          required: true
+          type: string
 
 jobs:
 
@@ -8,4 +18,8 @@ jobs:
 
     steps:
         - name: echo something
+<<<<<<< HEAD
           run: echo "Running on staging"
+=======
+          run: echo "Running on main (${{ inputs.branch }}) with letters ${{ inputs.letters }}"
+>>>>>>> main
