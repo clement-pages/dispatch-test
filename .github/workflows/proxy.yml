@@ -7,8 +7,6 @@ jobs:
   parse-form:
     runs-on: ubuntu-latest
 
-    outputs:
-      branch: ${{ steps.branch.outputs.selected_branch }}
     steps:
       - name: Extract issue body
         if: github.event_name == 'issues'
@@ -27,11 +25,6 @@ jobs:
             echo "selected_branch=main" >> $GITHUB_OUTPUT
           fi
 
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.branch.outputs.selected_branch }}
-      
-      - name: Check branch
+      - name: Run workflow
         run: |
-          git branch --show-current
+          gh workflow run workflow.yml --ref ${{ steps.branch.outputs.selected_branch }}
