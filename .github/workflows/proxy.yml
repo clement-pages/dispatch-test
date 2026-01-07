@@ -27,6 +27,6 @@ jobs:
 
       - name: Run workflow
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.DISPATCH_TOKEN}}
         run: |
           gh workflow run workflow.yml --repo ${{ github.repository }} --ref ${{ steps.branch.outputs.selected_branch }}
